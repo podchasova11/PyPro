@@ -1,4 +1,5 @@
 
+
 text = "Python_0001"
 print(text[1])  # первый символ строки text
 print(text[-1])  # последний символ строки text
