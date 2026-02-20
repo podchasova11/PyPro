@@ -14,3 +14,28 @@ fruits.append('банан')  # Добавляем элемент "банан" в
 
 print(fruits) # Вернет измененный список "['яблоко', 'груша', 'банан']"
 print(id(fruits))
+
+fruits.insert(2, "qwe")
+print(fruits)
+
+# Удаление элементов из списка и его очистка
+
+fruits.remove("банан")
+print(fruits)
+del fruits[0]
+print(fruits)
+
+fruits.pop(1)
+print(fruits)
+
+print(len(fruits))
+
+assert len(fruits) == 1
+
+
+
+
+
+
+
+
