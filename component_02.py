@@ -118,3 +118,12 @@ print(combined[-1])
 slice = combined[2:5]
 print(slice)
 
+
+combined = ['grape', 'apple', 'orange', 'kiwi', 2, 4, 6, 8]
+combined_copy = combined[:]
+combined_copy[1] = "яблоко"
+print(combined)
+print(id(combined))
+print(combined_copy)
+print(id(combined_copy))
+
