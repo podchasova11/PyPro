@@ -106,3 +106,14 @@ original_list[2][0] = 'a'
 print("Оригинальный список:", original_list)  # Вывод: [1, 2, ['a', 4]]
 print("Глубокая копия:", deep_copy)            # Вывод: [1, 2, [3, 4]]
 # меняя оригинал, копия не меняется.
+
+
+fruits = ["grape", "apple", "orange", "kiwi"]
+numbers = [2, 4, 6, 10]
+combined = fruits + numbers
+print(combined)
+print(len(combined))
+print(combined[-1])
+
+slice = combined[2:5]
+print(slice)
