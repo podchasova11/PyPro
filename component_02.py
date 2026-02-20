@@ -117,3 +117,4 @@ print(combined[-1])
 
 slice = combined[2:5]
 print(slice)
+
