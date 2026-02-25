@@ -127,3 +127,72 @@ print(id(combined))
 print(combined_copy)
 print(id(combined_copy))
 
+
+# num = int(input("Введите число: "))
+# if num > 0:
+#     print("Число положительное")
+# else:
+#     print("Число отрицательное")
+#
+#
+# num = int(input("Введите число: "))
+# if num < 0:
+#     print("Число отрицательное")
+# elif num == 0:
+#     print("Число равно нулю")
+# elif 0 < num < 10:
+#     print("Число от 1 до 9")
+# else:
+#     print("Число 10 и больше")
+
+
+# is_raining = False
+# is_sunny = False
+#
+# if is_raining and is_sunny:
+#     print("дождь при солнце, погода-парадокс")
+# elif is_sunny and not is_raining:
+#     print( "Сегодня солнечная погода, отличный день для прогулки!")
+# elif is_raining and not is_sunny:
+#     print("Сегодня идет дождь, возьмите зонт!")
+# else:
+#     print("Сегодня облачно, но без осадков")
+
+
+
+# Объявление переменных
+is_raining = True   # замените на True/False в зависимости от погоды
+is_sunny = False    # замените на True/False в зависимости от погоды
+
+# Определение сценариев погоды
+if is_raining and is_sunny:
+    result = "Дождь при солнце (погода-парадокс). Может быть радуга!"
+elif is_sunny and not is_raining:
+    result = "Сегодня солнечная погода, отличный день для прогулки!"
+elif is_raining and not is_sunny:
+    result = "Сегодня идет дождь, возьмите зонт!"
+else:  # не светит солнце и не идёт дождь
+    result = "Сегодня облачно, но без осадков"
+
+print(result)
+
+# Объявление переменных
+is_raining = True  # заменить на True/False в зависимости от погоды
+is_sunny = False  # заменить на True/False в зависимости от погоды
+
+if is_raining and is_sunny:
+    result = "Дождь при солнце (погода-парадокс). Может быть радуга!"
+elif is_sunny and not is_raining:
+    result = "Сегодня солнечная погода, отличный день для прогулки!"
+elif is_raining or not is_sunny:
+    # дождь без солнца, или когда не солнечно
+
+    if is_raining and not is_sunny:
+        result = "Сегодня идет дождь, возьмите зонт!"
+
+else:
+    result = "Сегодня облачно, но без осадков"
+
+print(result)
+
+
