@@ -195,4 +195,32 @@ else:
 
 print(result)
 
+student = {
+    "name": "Иван",
+    "age": 20,
+    "subjects": ["математика", "информатика"],
+    "average_score": 4.5
+}
+# Добавить новый предмет в список предметов студента
+student["subjects"].append("физика")
+print(student["subjects"])
+
+# удаление ключа "age"
+if "age" in student:
+    del student["age"]
+
+print(student)
+
+# Получить список всех ключей словаря
+for key in ["age", "gender"]:
+    print(f"Ключ '{key}' {'существует' if key in student else 'отсутствует'} в словаре.")
+
+keys = list(student.keys())
+for k in keys:
+    print(k)
+
+# получить список значений
+values = list(student.values())
+print(values)
+
 
