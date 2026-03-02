@@ -224,3 +224,22 @@ values = list(student.values())
 print(values)
 
 
+student = {
+    "name": "Ivan",
+    "age": 20,
+    "subjects": ["mathimatics", "informatic"],
+    "averege_score": 4.5
+}
+# добавить новый предмет в список предметов
+student["subjects"].append("fizics")
+print(student["subjects"])
+
+if "age" in student:
+    del student["age"]
+print(student)
+
+key = list(student.keys())
+print(key)
+
+value = list(student.values())
+print(values)
