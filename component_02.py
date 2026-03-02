@@ -243,3 +243,46 @@ print(key)
 
 value = list(student.values())
 print(values)
+
+
+response = {
+    "cartButtonEnabled": True,
+    "conditions": {
+        "campaign": {
+            "id": "unlimited_burn_99rub_prd",
+            "info": "Доставка в пункт выдачи от",
+            "link": "https://support.avito.ru/articles/2369"
+        },
+        "destination": "по Дзержинску",
+        "discount": 900,
+        "minDays": 1,
+        "price": 99,
+        "terms": "От 1 дня, от",
+        "trustfactors": [
+            {
+                "helpIcon": False,
+                "icon": "cod",
+                "label": "",
+                "text": "Можно оплатить при получении"
+            }
+        ]
+    },
+    "services": [
+        {
+            "available": True,
+            "enabled": True,
+            "type": "delivery"
+        },
+        {
+            "available": True,
+            "enabled": True,
+            "type": "deliveryCourier"
+        },
+        {
+            "available": False,
+            "enabled": False,
+            "type": "deliveryCourierD2D"
+        },
+    ]
+}
+
