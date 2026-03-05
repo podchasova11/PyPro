@@ -286,3 +286,23 @@ response = {
     ]
 }
 
+# Вывести значение ключа icon из списка trustfactors
+trustfactors = response["conditions"]["trustfactors"]
+icon_value = trustfactors[0]["icon"] if trustfactors else None
+print("icon:", icon_value)
+
+# Вывести значение id из campaign
+campaign = response["conditions"]["campaign"]
+id = campaign["id"]
+print("id :", id)
+
+# Проверить, что helpIcon равен False
+trustfactors = response["conditions"]["trustfactors"]
+helpIcon = trustfactors[0]["helpIcon"] if trustfactors else None
+assert helpIcon == False
+print("helpIcon :", helpIcon)
+
+# Получите значение поля type третьего элемента списка services
+
+
+
