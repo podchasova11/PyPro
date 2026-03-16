@@ -303,6 +303,12 @@ assert helpIcon == False
 print("helpIcon :", helpIcon)
 
 # Получите значение поля type третьего элемента списка services
+services = response["services"]
+type = services[2]["type"]
+print("type :", type)
+
+
+
 
 
 
