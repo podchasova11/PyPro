@@ -307,6 +307,20 @@ services = response["services"]
 type = services[2]["type"]
 print("type :", type)
 
+# Модель API
+model = {
+    "id": 12345,
+    "name": "Товар 1",
+    "description": "Описание товара 1",
+    "price": 100,
+    "attributes": {
+        "color": "красный",
+        "size": "S",
+        "weight": 0.5
+    }
+}
+
+color = model["attributes"]["color"] # Вернет в переменную значение "красный"
 
 
 
