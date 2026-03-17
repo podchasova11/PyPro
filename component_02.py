@@ -340,3 +340,25 @@ print("email :",  email)
     "2": "Бег"
 }
 print("увлечения :", увлечения)
+
+# Создание словаря с тремя элементами
+person = {
+    "имя": "Алиса",
+    "возраст": 30,
+    "город": "Москва"
+}
+
+print(person)
+
+# Обновление значения
+person["возраст"] = 31
+
+# Добавление нового элемента
+person["email"] = "alice@example.com"
+
+marks = person["marks"] = {
+        "math": "5",
+        "english": "4"
+    }
+print(marks)
+print(person)
