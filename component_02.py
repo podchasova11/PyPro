@@ -373,3 +373,49 @@ print(person)
 person["увлечения"]["dance"] = "20 years"
 print(person["увлечения"])
 
+person["lifestyle"] = {
+        "hobbies": {
+             "dance": "20 years"
+         },
+        "jobs": {
+            "Aplana": "2 years"
+        }
+    }
+
+print(person["lifestyle"])
+print(person)
+
+# Создание словаря с тремя элементами
+person = {
+    "имя": "Алиса",
+    "возраст": 30,
+    "город": "Москва"
+}
+
+del person["город"] # Удалит элемент с ключом "город"
+
+print(person)
+
+# Создание словаря с тремя элементами
+person = {
+    "имя": "Алиса",
+    "возраст": 30,
+    "город": "Москва"
+}
+
+dropped_city = person.pop("город") # Вырежет элемент с ключом "город"
+print("dropped_city :", dropped_city)
+
+
+# Получение элементов, ключей и значений словаря
+
+keys = list(person.keys())    # Преобразуем ключи в список - LIST Возвращает объект со списком ключей
+
+# Преобразуем values в список list
+values = list(person.values())  # Возвращает объект со списком значений
+print((keys, values))
+
+elements = person.items()
+print(elements)
+
+
