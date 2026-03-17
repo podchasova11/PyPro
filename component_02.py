@@ -334,3 +334,9 @@ print("color :", color)
 email = model["attributes"]["email"] = "alice@example.com"
 print("email :",  email)
 
+# Добавление вложенного элемента
+увлечения = model["attributes"]["увлечения"] = {
+    "1": "Чтение",
+    "2": "Бег"
+}
+print("увлечения :", увлечения)
