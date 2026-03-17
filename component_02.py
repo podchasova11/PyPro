@@ -419,3 +419,44 @@ elements = person.items()
 print(elements)
 
 
+# Ответ от сервера
+response = {
+    "id": 12345,
+    "name": "Товар 1",
+    "description": "Описание товара 1",
+    "price": 100,
+    "attributes": {
+        "color": "красный",
+        "size": "S",
+        "weight": 0.5
+    }
+}
+
+
+# Проверка того, что в словаре есть элемент с ключом "price"
+if "price" in response:
+    print("Ключ 'price' существует в словаре")
+
+# Более продвинутый способ проверки
+assert "price" in response, "Элемент отсутствует в ответе"
+# assert "prihhce" in response, "Element is not in answer"
+
+
+assert "color" in response["attributes"], "Element is not in attributes"
+assert "price" in response
+
+# Проверка ключа во вложенном словаре
+assert "size" in response["attributes"]
+
+# Так же можно проверить наличие ключа среди ключей
+assert "price" in response.keys()
+
+# Проверка ключа среди ключей во вложенном словаре
+assert "size" in response["attributes"].keys()
+
+# Так же можно проверить наличие ключа среди ключей
+assert "price" in response.keys()
+
+# Проверка ключа среди ключей во вложенном словаре
+assert "size" in response["attributes"].keys()
+
