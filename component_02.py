@@ -65,13 +65,16 @@ print(id(numbers))
 # Способ 1 - Метод copy()
 original_list = [1, 2, 3, 4, 5]
 copy_of_list = original_list.copy() # Создаст копию списка выше (это новый об
-
+print(id(original_list))
+print(id(copy_of_list))
 # Способ 2 - срез списка [:]
 # Да, срезы списка возвращают новый обьект)
 
 original_list = [1, 2, 3, 4, 5]
 copy_of_list = original_list[:]
 
+print(id(original_list))
+print(id(copy_of_list))
 
 # Оригинальный список с вложенным списком
 original_list = [1, 2, [3, 4]]
