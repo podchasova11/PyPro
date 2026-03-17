@@ -325,5 +325,12 @@ color = model["attributes"]["color"] # Вернет в переменную зн
 label = model["attributes"]["label"] = "Levis"
 print("label :", label)
 
+# Обновление значения
+color = model["attributes"]["color"] = "yellow"
 
+print("color :", color)
+
+# Добавление нового элемента
+email = model["attributes"]["email"] = "alice@example.com"
+print("email :",  email)
 
