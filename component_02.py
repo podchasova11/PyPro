@@ -362,3 +362,14 @@ marks = person["marks"] = {
     }
 print(marks)
 print(person)
+
+# Добавление вложенного элемента
+person["увлечения"] = {
+    "хобби": "Чтение",
+    "спорт": "Бег"
+}
+print(person)
+
+person["увлечения"]["dance"] = "20 years"
+print(person["увлечения"])
+
