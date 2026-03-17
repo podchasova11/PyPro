@@ -322,7 +322,8 @@ model = {
 
 color = model["attributes"]["color"] # Вернет в переменную значение "красный"
 
-
+label = model["attributes"]["label"] = "Levis"
+print("label :", label)
 
 
 
