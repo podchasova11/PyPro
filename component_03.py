@@ -36,4 +36,17 @@ for i in range(0, 10, 2):
 for i in range(5):
     print(i)
 
+#  цикл while
+
+secret_number = 7
+guess = None
+
+while secret_number != guess:
+    guess = int(input("Input mark from 1 to 10 : "))
+    if guess > secret_number:
+        print("Mark bigger then you write")
+    elif guess < secret_number:
+        print("Mark smaller then you write")
+    elif guess == secret_number:
+        print("You all right!")
 
