@@ -25,3 +25,15 @@ person = {
 for key, value in person.items():
     print(f"{key} : {value}")
 
+for _ in range(5):
+    print("Hello")
+
+# Печать квадратов четных чисел от 0 до 8
+for i in range(0, 10, 2):
+    print(i**2)
+
+# Печать чисел от 0 до 4
+for i in range(5):
+    print(i)
+
+
