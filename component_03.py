@@ -38,6 +38,11 @@ for i in range(5):
 
 #  цикл while
 
+count = 0 # Изначально переменная счетчика = 0
+while count < 5: # Пока переменная меньше 5, то выполняй блок кода ниже
+    print("Счетчик:", count) # Выводи значение переменной count
+    count += 1 # Добавь к ней 1
+
 secret_number = 7
 guess = None
 
@@ -49,4 +54,27 @@ while secret_number != guess:
         print("Mark smaller then you write")
     elif guess == secret_number:
         print("You all right!")
+
+total = 0 # Изначальное значение суммы чисел 0
+while total < 100: # Цикл будет выполнятся пока сумма меньше 100
+    num = int(input("Введите число: "))
+    total += num # Приваляет введенное число в переменную
+    print("Сумма:", total)
+
+
+# Для остановки цикла используется оператор break
+# конструкция while True, говорит,
+# что цикл будет выполняться пока внутри блока не будет вызван break.
+
+while True:
+    answer = input("Хотите продолжить? (да/нет): ")
+    if answer.lower() == "нет":
+        break
+
+numbers = [1, 2, 3, 4, 5] # Создаем список
+for num in numbers: # Перебор элементов
+    if num == 3: # Если встретился элемент со значением 3, то останавливай цикл
+        break
+    print(num)
+
 
