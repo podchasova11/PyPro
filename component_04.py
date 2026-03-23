@@ -190,3 +190,40 @@ except Exception as e:
     print("Ошибка:", e)
 
 # сюда уже можно не печатать, чтобы после исключения сценарий не продолжался
+
+
+class AdvancedBankAccount:
+
+    BANK_NAME = "JP Morgan"
+
+    def __init__(self, name, balance=0):
+        self.name = name
+        self._balance = balance
+
+    def deposit(self, amount):
+        self._balance += amount
+
+    def withdraw(self, amount):
+        if 0 < amount <= self._balance:
+            self._balance -= amount
+        else:
+            print("Недостаточно средств")
+
+    @property
+    def get_balance(self):
+        return self._balance
+
+    def transfer_to(self, other_account:int, amount):
+        if 0 < amount <= self._balance:
+            self._balance += other_account
+            print("Перевод выполнен успешно")
+        else :
+            print("Недостаточно средств для перевода")
+
+
+account1 = AdvancedBankAccount(name="Aleksei", balance=1000)
+account2 = AdvancedBankAccount(name="Ivan", balance=500)
+
+account1.transfer_to(account2, 300)
+print(account1)
+print(account2)
