@@ -193,7 +193,6 @@ except Exception as e:
 
 
 class AdvancedBankAccount:
-
     BANK_NAME = "JP Morgan"
 
     def __init__(self, name, balance=0):
@@ -201,7 +200,8 @@ class AdvancedBankAccount:
         self._balance = balance
 
     def deposit(self, amount):
-        self._balance += amount
+        if amount > 0:
+            self._balance += amount
 
     def withdraw(self, amount):
         if 0 < amount <= self._balance:
@@ -213,16 +213,20 @@ class AdvancedBankAccount:
     def get_balance(self):
         return self._balance
 
-    def transfer_to(self, other_account:int, amount):
+    def transfer_to(self, other_account, amount):
         if 0 < amount <= self._balance:
-            self._balance += other_account
+            self._balance -= amount
+            other_account._balance += amount
             print("Перевод выполнен успешно")
-        else :
+        else:
             print("Недостаточно средств для перевода")
 
+    def __str__(self):
+        return f"Владелец: {self.name}, Баланс: {self._balance}"
 
-account1 = AdvancedBankAccount(name="Aleksei", balance=1000)
-account2 = AdvancedBankAccount(name="Ivan", balance=500)
+
+account1 = AdvancedBankAccount('Алексей', 1000)
+account2 = AdvancedBankAccount('Иван', 500)
 
 account1.transfer_to(account2, 300)
 print(account1)
