@@ -1,0 +1,192 @@
+
+
+def summa(a, b):
+    return a + b
+
+print(summa(3, 5))
+
+# # nums = [1, 2, 3, 4]
+# def max_i_mal(nums):
+#     if not nums:
+#         raise ValueError("Список пустой")
+#     maximal = nums[0]
+#
+#     for x in nums[1:]:
+#         if x > maximal:
+#             maximal = x
+#     return maximal
+# nums = [1, 2, 3, 4]
+# print(max_i_mal())
+
+    # for c in range(list):
+    #     if a > b:
+    #         return maximal() == a
+    #     else a < b:
+    #         return maximal() == b
+
+
+nums = [1, 2, 100500]
+def max_in_list(nums):
+    if not nums:
+        raise ValueError("Список пустой")
+
+    m = nums[0]
+    for x in nums[1:]:
+        if x > m:
+            m = x
+    return m
+
+
+print(max_in_list(nums))
+
+
+# def buy_ticket(full_name, age, adult=False):
+#     if age >= 18:
+#         print("Билет продан")
+#     else:
+#         if adult:
+#             print("Билет продан под присмотром взрослого")
+#         else:
+#             print("Нельзя продать билет")
+
+
+full_name = None
+age = None
+
+
+def buy_ticket(full_name, age, adult=False):
+    if age >= 18:
+        print("Билет продан")
+    elif age < 18 and adult == True:
+        print("Билет продан под присмотром взрослого")
+    else:
+        print("Нельзя продать билет")
+
+
+buy_ticket("Mila", 25, True)
+print(buy_ticket("Mila", 25, True))
+
+numbers = [1, 2, 3, 4, 5, 6, 100500]
+def square_numbers(numbers):
+    return [x ** 2 for x in numbers]
+
+print(square_numbers(numbers))
+
+
+
+class Book:
+
+    def __init__(self, title, author, is_borrowed=False):
+        self.title = title
+        self.author = author
+        self.is_borrowed = is_borrowed
+
+    def borrow_book(self):
+        self.is_borrowed = True
+
+    def return_book(self):
+        self.is_borrowed = False
+
+    def get_status(self):
+        if self.is_borrowed in True:
+            return print("Взята")
+        elif self.is_borrowed in False:
+            return print("Доступна")
+
+
+class Book:
+    def __init__(self, title, author, is_borrowed=False):
+        self.title = title
+        self.author = author
+        self.is_borrowed = is_borrowed
+
+    def borrow_book(self):
+        self.is_borrowed = True
+
+    def return_book(self):
+        self.is_borrowed = False
+
+    def get_status(self):
+        return "Взята" if self.is_borrowed else "Доступна"
+
+    def __str__(self):
+        return f"{self.title} — {self.author} ({self.get_status()})"
+
+
+# Пример использования
+book = Book("Война и мир", "Лев Толстой")
+
+print(book)                 # ожидается: Доступна
+book.borrow_book()
+print(book)                 # ожидается: Взята
+book.return_book()
+print(book)                 # ожидается: Доступна
+
+
+class Book:
+    def __init__(self, title, author, is_borrowed=False):
+        self.title = title
+        self.author = author
+        self.is_borrowed = is_borrowed
+
+    def borrow_book(self):
+        if self.is_borrowed:
+            raise ValueError("Книга уже взята")
+        self.is_borrowed = True
+
+    def return_book(self):
+        if not self.is_borrowed:
+            raise ValueError("Нельзя вернуть книгу: она не была взята")
+        self.is_borrowed = False
+
+    def get_status(self):
+        return "Взята" if self.is_borrowed else "Доступна"
+
+    def __str__(self):
+        return f"{self.title} — {self.author} ({self.get_status()})"
+
+
+# Пример использования
+book = Book("Война и мир", "Лев Толстой")
+
+print(book)                 # ожидается: Доступна
+book.borrow_book()
+print(book)                 # ожидается: Взята
+book.return_book()
+print(book)                 # ожидается: Доступна
+
+
+
+class Book:
+    def __init__(self, title, author, is_borrowed=False):
+        self.title = title
+        self.author = author
+        self.is_borrowed = is_borrowed
+
+    def borrow_book(self):
+        if self.is_borrowed:
+            raise Exception("Книга уже взята")
+        self.is_borrowed = True
+
+    def return_book(self):
+        if not self.is_borrowed:
+            raise Exception("Книга не была взята")
+        self.is_borrowed = False
+
+    def get_status(self):
+        return "Взята" if self.is_borrowed else "Доступна"
+
+    def __str__(self):
+        return f"{self.title} — {self.author} ({self.get_status()})"
+
+
+book = Book("1984", "Джордж Оруэлл")
+
+print(book)
+
+try:
+    book.return_book()   # здесь будет исключение
+except Exception as e:
+    print("Ошибка:", e)
+
+# сюда уже можно не печатать, чтобы после исключения сценарий не продолжался
