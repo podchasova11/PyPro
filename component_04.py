@@ -232,3 +232,94 @@ account1.transfer_to(account2, 300)
 print(account1)
 print(account2)
 
+
+class Pets:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def speak(self):
+        print("животное издаёт звук")
+
+
+class Dog(Pets):
+
+    def speak(self):
+        return print("Woof")
+
+
+class Cat(Pets):
+
+    def speak(self):
+        print("Meow")
+
+
+def make_it_speak(pets):
+    pets.speak()
+
+
+dog = Dog("DGFD", 3)
+cat = Cat("dfv", 5)
+
+
+print(make_it_speak(dog))
+print(make_it_speak(cat))
+
+class Pets:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def speak(self):
+        print("животное издаёт звук")
+
+
+class Dog(Pets):
+    def speak(self):
+        print("Woof")
+
+
+class Cat(Pets):
+    def speak(self):
+        print("Meow")
+
+
+# Создаём экземпляры и вызываем speak напрямую
+dog = Dog("Биг", 3)
+cat = Cat("Персик", 5)
+
+dog.speak()  # → Woof
+cat.speak()  # → Meow
+
+class Pets:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def speak(self):
+        pass
+
+    def __str__(self):
+        return f"Имя: {self.name}, Возраст: {self.age}"
+
+
+class Dog(Pets):
+    def speak(self):
+        print("Woof")
+
+
+class Cat(Pets):
+    def speak(self):
+        print("Meow")
+
+
+# Пример использования
+baron = Dog("Биг", 3)
+murka = Cat("Персик", 2)
+
+baron.speak()  # → Woof
+murka.speak()  # → Meow
+
+print(baron)   # → Имя: Биг, Возраст: 3
+print(murka)   # → Имя: Персик, Возраст: 2
