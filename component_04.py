@@ -323,3 +323,72 @@ murka.speak()  # → Meow
 
 print(baron)   # → Имя: Биг, Возраст: 3
 print(murka)   # → Имя: Персик, Возраст: 2
+
+
+class Автомобиль:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+
+    def get_description(self):
+        return f"{self.brand} {self.model} ({self.year} г.)"
+
+    def start_engine(self):
+        return "Двигатель запущен"
+
+    # Метод для изменения года выпуска
+    def update_year(self, new_year):
+        self.year = new_year
+
+
+class Электрокар(Автомобиль):
+    def __init__(self, brand, model, year, battery_capacity):
+        super().__init__(brand, model, year)
+        self.battery_capacity = battery_capacity
+
+    def start_engine(self):
+        return "Электродвигатель запущен"
+
+    def get_battery_info(self):
+        return f"Емкость батареи: {self.battery_capacity} кВтч"
+
+
+class Грузовик(Автомобиль):
+    def __init__(self, brand, model, year, load_capacity):
+        super().__init__(brand, model, year)
+        self.load_capacity = load_capacity
+
+    def get_load_info(self):
+        return f"Грузоподъемность: {self.load_capacity} тонн"
+
+
+# Пример использования
+if __name__ == "__main__":
+    # Создание экземпляра класса Автомобиль
+    car = Автомобиль("Toyota", "Camry", 2022)
+    print("Автомобиль:")
+    print(f"Описание: {car.get_description()}")
+    print(f"Запуск двигателя: {car.start_engine()}")
+
+    # Создание экземпляра класса Электрокар
+    ev = Электрокар("Tesla", "Model S", 2023, 100)
+    print("\nЭлектрокар:")
+    print(f"Описание: {ev.get_description()}")
+    print(f"Запуск двигателя: {ev.start_engine()}")
+    print(f"Информация о батарее: {ev.get_battery_info()}")
+
+    # Создание экземпляра класса Грузовик
+    truck = Грузовик("Volvo", "FH16", 2021, 40)
+    print("\nГрузовик:")
+    print(f"Описание: {truck.get_description()}")
+    print(f"Запуск двигателя: {truck.start_engine()}")
+    print(f"Информация о грузоподъемности: {truck.get_load_info()}")
+
+    # Демонстрация изменения года выпуска
+    print("\nОбновление года выпуска автомобиля:")
+    print(f"До: {car.get_description()}")
+    car.update_year(2024)
+    print(f"После: {car.get_description()}")
+
+
