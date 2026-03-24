@@ -392,3 +392,163 @@ if __name__ == "__main__":
     print(f"После: {car.get_description()}")
 
 
+class Автомобиль:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+
+    def get_description(self):
+        return f"{self.brand} {self.model} ({self.year} г.)"
+
+    def start_engine(self):
+        return "Двигатель запущен"
+
+    # Метод для изменения года выпуска
+    def update_year(self, new_year):
+        self.year = new_year
+
+
+class Электрокар(Автомобиль):
+    def __init__(self, brand, model, year, battery_capacity):
+        super().__init__(brand, model, year)
+        self.battery_capacity = battery_capacity
+
+    def start_engine(self):
+        return "Электродвигатель запущен"
+
+    def get_battery_info(self):
+        return f"Емкость батареи: {self.battery_capacity} кВтч"
+
+
+class Грузовик(Автомобиль):
+    def __init__(self, brand, model, year, load_capacity):
+        super().__init__(brand, model, year)
+        self.load_capacity = load_capacity
+
+    def get_load_info(self):
+        return f"Грузоподъемность: {self.load_capacity} тонн"
+
+
+
+
+
+
+
+    class Автомобиль:
+        def __init__(self, brand, model, year):
+            self.brand = brand
+            self.model = model
+            self.year = year
+
+        def get_description(self):
+            return f"{self.brand} {self.model} ({self.year} г.)"
+
+        def start_engine(self):
+            return "Двигатель запущен"
+
+        # Метод для изменения года выпуска
+        def update_year(self, new_year):
+            self.year = new_year
+
+        def __str__(self):
+            return f"Автомобиль {self.brand} {self.model}, год: {self.year}"
+
+    class Электрокар(Автомобиль):
+        def __init__(self, brand, model, year, battery_capacity):
+            super().__init__(brand, model, year)
+            self.battery_capacity = battery_capacity
+
+        def start_engine(self):
+            return "Электродвигатель запущен"
+
+        def get_battery_info(self):
+            return f"Емкость батареи: {self.battery_capacity} кВтч"
+
+        def __str__(self):
+            return f"Электрокар {self.brand} {self.model}, год: {self.year}, заряд: {self.battery_capacity}%"
+
+    class Грузовик(Автомобиль):
+        def __init__(self, brand, model, year, load_capacity):
+            super().__init__(brand, model, year)
+            self.load_capacity = load_capacity
+
+        def get_load_info(self):
+            return f"Грузоподъемность: {self.load_capacity} тонн"
+
+        def __str__(self):
+            return f"Грузовик {self.brand} {self.model}, год: {self.year}, загрузка: {self.load_capacity} т"
+
+
+
+
+
+
+
+
+
+        class Автомобиль:
+            def __init__(self, brand, model, year):
+                self.brand = brand
+                self.model = model
+                self.year = year
+
+            def get_description(self):
+                return f"{self.brand} {self.model} ({self.year} г.)"
+
+            def start_engine(self):
+                return "Двигатель запущен"
+
+            # Метод для изменения года выпуска
+            def update_year(self, new_year):
+                self.year = new_year
+
+        class Электрокар(Автомобиль):
+            def __init__(self, brand, model, year, battery_capacity):
+                super().__init__(brand, model, year)
+                self.battery_capacity = battery_capacity
+
+            def start_engine(self):
+                return "Электродвигатель запущен"
+
+            def get_battery_info(self):
+                return f"Емкость батареи: {self.battery_capacity} кВтч"
+
+        class Грузовик(Автомобиль):
+            def __init__(self, brand, model, year, load_capacity):
+                super().__init__(brand, model, year)
+                self.load_capacity = load_capacity
+
+            def get_load_info(self):
+                return f"Грузоподъемность: {self.load_capacity} тонн"
+
+        if __name__ == "__main__":
+            print("=== автомобили ===\n")
+
+            # Базовый автомобиль
+            car = Автомобиль("Toyota", "Camry", 2022)
+            print(car.get_description())
+            print(car.start_engine())
+            car.update_year(2024)
+            print(f"Обновлённый год: {car.year}")
+            print()
+
+            # Электрокар
+            ev = Электрокар("Tesla", "Model Y", 2023, 75.0)
+            print(ev.get_description())
+            print(ev.start_engine())
+            print(ev.get_battery_info())
+            print()
+
+            # Грузовик
+            truck = Грузовик("Volvo", "FH16", 2021, 40.5)
+            print(truck.get_description())
+            print(truck.start_engine())
+            print(truck.get_load_info())
+            print()
+
+            # один вызов — разное поведение
+            vehicles = [car, ev, truck]
+            print("=== start_engine() ===")
+            for v in vehicles:
+                print(f"{v.get_description()} → {v.start_engine()}")
