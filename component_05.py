@@ -45,9 +45,67 @@ print(longest_word)
 
 # Нахождения самого частого элемента в списке [1, 2, 2, 3, 4, 7, 5, 6, 7, 7]
 
+# numbers = [1, 2, 2, 3, 4, 7, 5, 6, 7, 7]
+#
+# counts = {}
+# most_frequent = numbers[0]
+# max_count = 0
+#
+# for num in numbers:
+#     # Считаем количество вхождений
+#     if num in counts:
+#         counts[num] += 1
+#     else:
+#         counts[num] = 1
+#
+#     # Сразу проверяем, стал ли этот элемент самым частым
+#     if counts[num] > max_count:
+#         max_count = counts[num]
+#         most_frequent = num
+#
+# print(most_frequent)  # Выведет 7
+
+
+numbers = [1, 2, 2, 3, 4, 7, 5, 6, 7, 7]
+
+most_frequent = numbers[0]
+
+for num in numbers:
+    if numbers.count(num) > numbers.count(most_frequent):
+        most_frequent = num
+
+print(most_frequent) # Выведет 7
+
+
+numbers = [1, 2, 2, 3, 4, 7, 5, 6, 7, 7]
+
+often_number = numbers[0]
+
+for num in numbers:
+    if numbers.count(num) > numbers.count(often_number):
+        often_number = num
+
+print(often_number) # Выведет 7
+
+
+
 
 
 # Проверка слова/фразы на полиндром!
+
+line_words = " роза упала на лапу Азора"
+new = line_words.replace(" ", "").lower()
+print(new)
+palindrom = new[::-1]
+print([palindrom])
+
+
+line_words = "Шалаш"
+word = line_words.replace(" ", "").lower()
+palindrome = word[::-1]
+assert word == palindrome, "Не является палиндромом"
+print(f"Строка: '{word}'")
+print(f"Палиндром: '{word[::-1]}'")
 
 
 
