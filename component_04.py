@@ -552,3 +552,43 @@ class Грузовик(Автомобиль):
             print("=== start_engine() ===")
             for v in vehicles:
                 print(f"{v.get_description()} → {v.start_engine()}")
+
+
+age: int = 10
+
+def greet(name: str, age :int) -> str:
+    return f"Hello, {name} you age {age}"
+
+print(greet('Alice', 10))  # Выведет 'Hello, Alice'
+
+
+def safe_division(a, b):
+    try:
+        result = a / b
+        print(f"Результат: {result}")
+        return result
+    except ZeroDivisionError:
+        print("Ошибка: деление на ноль")
+        return None
+
+
+print(safe_division(10, 2))
+print(safe_division(5, 0))
+
+
+
+def safe_division(a, b):
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        print("Ошибка: оба аргумента должны быть числами")
+        return None
+    try:
+        result = a / b
+        print(f"Результат: {result}")
+        return result
+    except ZeroDivisionError:
+        print("Ошибка: деление на ноль")
+        return None
+
+
+print(safe_division(10, 2))
+print(safe_division(5, 0))
