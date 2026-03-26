@@ -31,6 +31,15 @@ say_hello() # Вызов продекорированной функции
 
 # Найти самую длинную строку в списке ["hi", "intelegent", "world", "indigo"]
 
+words = ["hi", "intelegent", "world", "indigo"]
+maximum = max(len(word) for word in words)
+print(maximum)
+
+
+words = ["hi", "intelegent", "world", "indigo"]
+maximum = max(len(word) for word in words)
+longest_word = [word for word in words if len(word) == maximum]
+print(longest_word)
 
 
 
