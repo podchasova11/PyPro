@@ -1,22 +1,22 @@
+import time
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
-driver = webdriver.Chrome()
-driver = webdriver.Chrome()
+driver = webdriver.Firefox()
+driver.get("https://github.com/")
+time.sleep(3)
+elements = driver.find_elements(By.TAG_NAME, "h2")  # Находим все элементы h2
+for element in elements:  # Перебираем список элементов
+    print(element.text)  # Выводим текст элементов h2
 
+
+driver.get("https://ya.ru/")
+time.sleep(3)
+elements = driver.find_elements(By.TAG_NAME, "h2")  # Находим все элементы h2
+for element in elements:  # Перебираем список элементов
+    print(element.text)  # Выводим текст элементов h2
+driver.quit()
 
 driver.close() # Закрытие одной вкладки, если их несколько
 driver.quit() # Закрывает все окна браузера, в целом закрывает всю сессию
-
-class Person:
-    age = 23
-
-person = Person()
-print(getattr(person, 'age'))  # Выведет 23
-setattr(person, 'age', 30)
-print(person.age)  # Выведет 30
-
-double = lambda x: x * 2
-print(double(5))  # Выведет 10
-
-enumerate(iterable, start=0)
