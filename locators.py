@@ -1,12 +1,3 @@
-from selenium import webdriver
-
-driver = webdriver.Chrome()
-
-driver.get("https://demoqa.com/text-box")
-
-driver.find_element()
-
-
 # Header
 LOGO = ("xpath", "(//a[@class='nav-link'])[1]")
 BUTTON_SIGN_IN = ("xpath", "//button//font[text()='Войти']")
