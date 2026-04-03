@@ -1,0 +1,2 @@
+$enc = [IO.File]::ReadAllBytes($passwordFilePath)
+Write-Host "Encrypted bytes length: $($enc.Length)"
