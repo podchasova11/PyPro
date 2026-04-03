@@ -16,29 +16,57 @@ import os
 #
 # time.sleep(5)
 
-
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
+# Указываем путь к папке для загрузок
+download_dir = os.path.abspath("lesson_6/downloads")
 
-# Инициализируем опции
+# Создаём папку, если её нет
+os.makedirs(download_dir, exist_ok=True)
+
+# Настройки Chrome
 options = Options()
-preferences = {
-    "download.default_directory" : os.path.join(os.getcwd(), "downloads"),
-    "safebrowsing.enabled" : False,
+options.add_experimental_option("prefs", {
+    "download.default_directory": download_dir,
+    "safebrowsing.enabled": False,
     "download.prompt_for_download": False,
     "download.directory_upgrade": True,
-}
-options.add_experimental_option("prefs", preferences)
+    "download.extensions_to_open": "",  # предотвращает открытие в браузере
+})
 
-# Добавляем опции в браузер
+# Инициализация драйвера
 driver = webdriver.Chrome(options=options)
 
-# Открываем страницу для скачивания файлов
-driver.get("http://the-internet.herokuapp.com/download")
+try:
+    # Открываем страницу
+    driver.get("http://the-internet.herokuapp.com/download")
 
-# Найдем все элементы и кликнем на любой
-driver.find_elements(By.XPATH, "//*[@id='content']/div/a[2]']")[1].click()
+    # Ждём, пока появятся ссылки на файлы (элементы <a>)
+    wait = WebDriverWait(driver, 10)
+    links = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//div[@id='content']//a")))
+
+    print(f"Найдено {len(links)} файлов для скачивания.")
+
+    # Цикл for — скачиваем каждый файл по очереди
+    for i, link in enumerate(links, 1):
+        try:
+            # Прокручиваем элемент в поле зрения (на случай, что скрыт)
+            driver.execute_script("arguments[0].scrollIntoView(true);", link)
+            # Ждём, чтобы элемент стал кликабельным
+            wait.until(EC.element_to_be_clickable(link))
+            # Кликаем
+            link.click()
+            print(f"[{i}/{len(links)}] Скачан: {link.text.strip() or 'без имени'}")
+        except Exception as e:
+            print(f"[{i}/{len(links)}] Ошибка при скачивании: {e}")
+
+    print("Загрузка завершена.")
+
+finally:
+    driver.quit()
 

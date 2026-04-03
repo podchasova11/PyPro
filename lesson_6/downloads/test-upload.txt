@@ -1,0 +1,4 @@
+This is a sample file used for file upload testing in the Playwright framework.
+File: test-upload.txt
+Content: Sample upload test data for XYZ Bank automation framework.
+Timestamp: Generated for test purposes only.
