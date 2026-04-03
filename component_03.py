@@ -179,7 +179,7 @@ with (open("original.txt", "w+") as original):
     lines = ["gthdfdfbdb\n",
              "122344455"]
     original.writelines(lines)
-    print("Its Okey file original.txt is create and full")
+    print("Its Okey lesson_6 original.txt is create and full")
 
     try:
         with open("copy.txt", "w+") as destination:
@@ -188,7 +188,7 @@ with (open("original.txt", "w+") as original):
 
             print("Its OKEY ALL!")
     except FileNotFoundError:
-        print("Error! file original.txt not found")
+        print("Error! lesson_6 original.txt not found")
 
 
 with open("data.txt", "r") as file:
@@ -223,7 +223,7 @@ with open("original.txt", "w+") as original:
         "122344455\n"
     ]
     original.writelines(lines)
-    print("Its Okey file original.txt is created and full")
+    print("Its Okey lesson_6 original.txt is created and full")
 
     original.seek(0)  # вернуться в начало, чтобы читать
 
