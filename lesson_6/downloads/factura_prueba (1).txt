@@ -1,0 +1,4 @@
+Este es un archivo de prueba simulando una factura de seguro.
+Monto: $15000
+Cliente: Gabriel
+Fecha: 02/04/2026
