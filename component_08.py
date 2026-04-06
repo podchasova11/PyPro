@@ -291,18 +291,27 @@ import os
 
 
 from selenium import webdriver
-from selenium.webdriver.support.expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
-VISIBLE_AFTER_BUTTON = ("xpath", "//button[@id='visibleAfter']")
+# Locator (improved: use By.XPATH instead of raw tuple)
+VISIBLE_AFTER_BUTTON = (By.XPATH, "//div[@id='delayedText']")
 
 options = webdriver.ChromeOptions()
-options.argument("--window-size=1920,1080")
+options.add_argument("--window-size=1920,1080")  # 'add_argument'
 
 driver = webdriver.Chrome(options=options)
-wait = WebDriverWait(driver, 10, poll_frequency=10)
+wait = WebDriverWait(driver, 30, poll_frequency=1)
 
-driver.get("https://demoqa.com/dynamic-properties")
-wait.until(EC.visibility_of_element_located(VISIBLE_AFTER_BUTTON))
+try:
+    driver.get("https://omayo.blogspot.com/")
+    # Wait for the button to become *visible* (not just present)
+    wait.until(EC.visibility_of_element_located(VISIBLE_AFTER_BUTTON))
 
-driver.find_element(*VISIBLE_AFTER_BUTTON)
+    # Click it
+    button = driver.find_element(*VISIBLE_AFTER_BUTTON)
+    button.click()
+    print("✅ Button clicked successfully.")
+finally:
+    driver.quit()
