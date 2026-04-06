@@ -107,64 +107,116 @@ import os
 #     # закрыть браузер
 #     driver.quit()
 
+#
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.common.exceptions import TimeoutException, NoAlertPresentException
+#
+# # --- Настройка драйвера (Chrome)
+# # Убедитесь, что chromedriver в PATH или укажите путь:
+# # driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
+# driver = webdriver.Chrome()
+# wait = WebDriverWait(driver, 30)  # Явное ожидание до 30 секунд
+#
+# try:
+#     # 1. Открыть сайт
+#     driver.get("https://omayo.blogspot.com/")
+#     print("[✓] Страница загружена")
+#
+#     # 2. Нажать кнопку 'Alert' и обработать алерт
+#     alert_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Alert']")))
+#     alert_btn.click()
+#     print("[✓] Кнопка 'Alert' нажата")
+#
+#     # Ожидание алерта (до 10 сек — чтобы не ждать 30, если алерт появился быстро)
+#     try:
+#         alert = wait.until(EC.alert_is_present())
+#         alert.accept()  # Программное подтверждение
+#         print("[✓] Алерт успешно принят")
+#     except TimeoutException:
+#         print("[!] Алерт не появился в течение ожидания")
+#
+#     # 3. Выбрать 'Blue' из выпадающего списка
+#     select_element = wait.until(EC.element_to_be_clickable((By.ID, "multiselect")))
+#     select_element.click()
+#
+#     # Находим и кликаем по опции 'Blue'
+#     blue_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//option[text()='Blue']")))
+#     blue_option.click()
+#     print("[✓] Выбрано значение 'Blue'")
+#
+#     # 4. Работа с iframe: переключиться и нажать 'Click me'
+#     iframe = wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, "iframe1")))
+#     click_me_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Click me']")))
+#     click_me_btn.click()
+#     print("[✓] Кнопка 'Click me' внутри iframe нажата")
+#
+#     # Вернуться в основной контекст
+#     driver.switch_to.default_content()
+#
+#     # Дополнительно: можно добавить проверку результата (например, текст после клика)
+#     # Например: success_msg = wait.until(EC.visibility_of_element_located((By.ID, "result")))
+#
+# except TimeoutException as e:
+#     print(f"[ERROR] Элемент не найден в течение 30 секунд: {e}")
+# except Exception as e:
+#     print(f"[ERROR] Неожиданная ошибка: {e}")
+# finally:
+#     # Опционально: раскомментируйте следующую строку, чтобы браузер не закрывался сразу
+#     # input(\"Нажмите Enter для выхода...\")
+#     driver.quit()
+#     print("[ℹ] Драйвер закрыт")
+
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoAlertPresentException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
+import logging
 
-# --- Настройка драйвера (Chrome)
-# Убедитесь, что chromedriver в PATH или укажите путь:
-# driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
+# Настройка логирования
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Инициализация драйвера
 driver = webdriver.Chrome()
-wait = WebDriverWait(driver, 30)  # Явное ожидание до 30 секунд
+wait = WebDriverWait(driver, 30)  # Явное ожидание 30 сек
 
 try:
-    # 1. Открыть сайт
-    driver.get("https://omayo.blogspot.com/")
-    print("[✓] Страница загружена")
+    logger.info("Открываем страницу https://omayo.blogspot.com")
+    driver.get("https://omayo.blogspot.com")
 
-    # 2. Нажать кнопку 'Alert' и обработать алерт
-    alert_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Alert']")))
-    alert_btn.click()
-    print("[✓] Кнопка 'Alert' нажата")
+    # Список XPath и описаний кнопок
+    buttons = [
+        ("//*[@id=\"alert2\"]", "Кнопка 'Alert2'"),
+        ("//*[@id=\"delayedText\"]", "Кнопка 'Delayed Text'"),
+        ("//*[@id=\"timerButton\"]", "Кнопка 'Timer Button'"),
+        ("//*[@id=\"HTML44\"]//div[1]/button[2]", "Вторая кнопка в HTML44 (под заголовком 'Demo')"),
+    ]
 
-    # Ожидание алерта (до 10 сек — чтобы не ждать 30, если алерт появился быстро)
-    try:
-        alert = wait.until(EC.alert_is_present())
-        alert.accept()  # Программное подтверждение
-        print("[✓] Алерт успешно принят")
-    except TimeoutException:
-        print("[!] Алерт не появился в течение ожидания")
+    for xpath, description in buttons:
+        try:
+            logger.info(f"Ищем: {description} по XPath → {xpath}")
+            element = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            element.click()
+            logger.info(f"✓ Успешно кликнули по: {description}")
+        except TimeoutException:
+            logger.error(f"✗ Не найден или не кликабелен: {description} (XPath: {xpath})")
+        except ElementClickInterceptedException:
+            logger.warning(f"⚠ Элемент видим, но перекрыт другим элементом: {description}. Попробуем прокрутку.")
+            try:
+                driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                driver.implicitly_wait(1)
+                element.click()
+                logger.info(f"✓ Клик после прокрутки: {description}")
+            except Exception as e:
+                logger.error(f"✗ Не удалось кликнуть даже после прокрутки: {description} — {e}")
+        except Exception as e:
+            logger.error(f"✗ Ошибка при работе с {description}: {e}")
 
-    # 3. Выбрать 'Blue' из выпадающего списка
-    select_element = wait.until(EC.element_to_be_clickable((By.ID, "multiselect")))
-    select_element.click()
-
-    # Находим и кликаем по опции 'Blue'
-    blue_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//option[text()='Blue']")))
-    blue_option.click()
-    print("[✓] Выбрано значение 'Blue'")
-
-    # 4. Работа с iframe: переключиться и нажать 'Click me'
-    iframe = wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, "iframe1")))
-    click_me_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Click me']")))
-    click_me_btn.click()
-    print("[✓] Кнопка 'Click me' внутри iframe нажата")
-
-    # Вернуться в основной контекст
-    driver.switch_to.default_content()
-
-    # Дополнительно: можно добавить проверку результата (например, текст после клика)
-    # Например: success_msg = wait.until(EC.visibility_of_element_located((By.ID, "result")))
-
-except TimeoutException as e:
-    print(f"[ERROR] Элемент не найден в течение 30 секунд: {e}")
-except Exception as e:
-    print(f"[ERROR] Неожиданная ошибка: {e}")
 finally:
-    # Опционально: раскомментируйте следующую строку, чтобы браузер не закрывался сразу
-    # input(\"Нажмите Enter для выхода...\")
+    logger.info("Завершаем тест. Закрываем браузер.")
     driver.quit()
-    print("[ℹ] Драйвер закрыт")
