@@ -223,96 +223,68 @@ import os
 #
 
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoAlertPresentException, NoSuchElementException, \
-    WebDriverException
+from selenium.common.exceptions import TimeoutException, NoAlertPresentException
 import logging
 import time
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+# Настройка логирования
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+try:
+    # Инициализация драйвера
+    driver = webdriver.Chrome()
+    wait = WebDriverWait(driver, 30)  # Явное ожидание 30 сек
+    logger.info("Браузер запущен")
 
-def run_omayo_test():
-    driver = None
+    # Открытие страницы
+    driver.get("https://omayo.blogspot.com")
+    logger.info("Открыта страница https://omayo.blogspot.com")
+
+    # 1. Кнопка Alert
+    alert_btn = wait.until(EC.element_to_be_clickable((By.ID, "alertb")))
+    alert_btn.click()
+    logger.info("Кнопка Alert нажата")
+
+    # Принятие алерта
     try:
-        # Initialize Chrome driver
-        logger.info("Starting Chrome browser...")
-        driver = webdriver.Chrome()
-        driver.maximize_window()
+        alert = wait.until(EC.alert_is_present())
+        alert.accept()
+        logger.info("Алерт принят")
+    except TimeoutException:
+        logger.warning("Алерт не появился в течение ожидания")
 
-        # Navigate to the page
-        url = "https://omayo.blogspot.com"
-        logger.info(f"Navigating to {url}...")
-        driver.get(url)
+    # 2. Выбор 'Blue' в мультивыборе — исправлено: прямой клик по <option>
+    select_element = wait.until(EC.presence_of_element_located((By.ID, "multiselect")))
+    driver.execute_script("arguments[0].scrollIntoView(true);", select_element)
+    time.sleep(0.5)
 
-        # Wait up to 30 seconds for page load
-        wait = WebDriverWait(driver, 30)
+    # Клик по option с текстом 'Blue'
+    blue_option = wait.until(
+        EC.element_to_be_clickable((By.XPATH, "//select[@id='multiselect']//option[text()='Blue']"))
+    )
+    blue_option.click()
+    logger.info("Опция 'Blue' выбрана напрямую через клик по <option>")
 
-        # --- Step 1: Click Alert button and accept alert ---
-        logger.info("Locating and clicking 'Alert' button...")
-        alert_btn = wait.until(EC.element_to_be_clickable((By.ID, "alertb")))
-        alert_btn.click()
+    # 3. Переход в iframe и клик по кнопке 'Click me'
+    iframe = wait.until(EC.frame_to_be_available_and_switch_to_it("iframe1"))
+    click_me_btn = wait.until(EC.element_to_be_clickable((By.ID, "alertb")))
+    click_me_btn.click()
+    logger.info("Кнопка 'Click me' в iframe нажата")
 
-        logger.info("Waiting for alert and accepting it...")
-        try:
-            alert = wait.until(EC.alert_is_present())
-            alert.accept()
-            logger.info("Alert accepted successfully.")
-        except TimeoutException:
-            logger.warning("No alert appeared within 30 seconds.")
+    # Возврат из iframe (опционально, но хорошая практика)
+    driver.switch_to.default_content()
 
-        # --- Step 2: Select 'Blue' from multiselect ---
-        logger.info("Selecting 'Blue' from multiselect dropdown...")
-        multiselect = wait.until(EC.element_to_be_clickable((By.ID, "multiselect")))
-        # Scroll into view if needed
-        driver.execute_script("arguments[0].scrollIntoView(true);", multiselect)
-        time.sleep(0.5)
-
-        # Use Select class for multi-select
-        from selenium.webdriver.support.ui import Select
-        select = Select(multiselect)
-        select.select_by_visible_text("Blue")
-        logger.info("'Blue' selected successfully.")
-
-        # --- Step 3: Switch to iframe and click 'Click me' button ---
-        logger.info("Switching to iframe with id='iframe1'...")
-        iframe = wait.until(EC.frame_to_be_available_and_switch_to_it("iframe1"))
-
-        logger.info("Locating and clicking 'Click me' button inside iframe...")
-        click_me_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Click me']")))
-        click_me_btn.click()
-        logger.info("'Click me' button clicked inside iframe.")
-
-        # Optional: verify result (e.g., text appears) — can be extended later
-        # Example stub:
-        # try:
-        #     success_text = wait.until(EC.presence_of_element_located((By.ID, "some-result-id")))
-        #     logger.info(f"Verification passed: {success_text.text}")
-        # except TimeoutException:
-        #     logger.warning("Expected result element not found.")
-
-        logger.info("All steps completed successfully.")
-
-    except TimeoutException as e:
-        logger.error(f"Timeout occurred: {e}")
-    except NoSuchElementException as e:
-        logger.error(f"Element not found: {e}")
-    except WebDriverException as e:
-        logger.error(f"WebDriver error: {e}")
-    except Exception as e:
-        logger.error(f"Unexpected error: {e}")
-    finally:
-        if driver:
-            logger.info("Closing browser...")
-            driver.quit()
-
-
-if __name__ == "__main__":
-    run_omayo_test()
+except Exception as e:
+    logger.error(f"Произошла ошибка: {e}")
+finally:
+    # Закрытие браузера
+    try:
+        driver.quit()
+        logger.info("Браузер закрыт")
+    except:
+        pass
