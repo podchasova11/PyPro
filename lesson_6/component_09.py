@@ -73,12 +73,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-# Настройка драйвера (без GUI для удобства, можно убрать headless)
+# Настройка драйвера
 options = Options()
-# options.add_argument("--headless")  # опционально
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-
 driver = webdriver.Chrome(options=options)
 
 try:
