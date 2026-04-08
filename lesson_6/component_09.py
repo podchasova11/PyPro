@@ -69,46 +69,87 @@
 #     driver.add_cookie(cookie)
 #
 # driver.refresh()
+#
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
+#
+# # Настройка драйвера
+# options = Options()
+# driver = webdriver.Chrome(options=options)
+#
+# try:
+#     # 1. Открываем сайт
+#     driver.get("https://www.freeconferencecall.com/login")
+#
+#     # 2. Удаляем все существующие куки
+#     driver.delete_all_cookies()
+#
+#     # 3. Устанавливаем куку username=user123
+#     driver.add_cookie({
+#         "name": "username",
+#         "value": "user123",
+#         "domain": ".freeconferencecall.com",  # важно: указать домен
+#     })
+#
+#     # 4. Обновляем страницу
+#     driver.refresh()
+#
+#     # 5. Читаем и проверяем куку
+#     cookie = driver.get_cookie("username")
+#     if cookie:
+#         print("✅ Кука 'username' успешно установлена:")
+#         print(f"   Значение: {cookie['value']}")
+#         print(f"   Домен: {cookie.get('domain', 'не указан')}")
+#     else:
+#         print(" Кука 'username' не найдена. Возможно, домен или путь указаны неверно.")
+#
+#     # Дополнительно: вывод всех кук для отладки
+#     all_cookies = driver.get_cookies()
+#     print(f"\n Всего кук на странице: {len(all_cookies)}")
+#     for c in all_cookies:
+#         if c["name"] == "username":
+#             print(f"   → username = '{c['value']}'")
+#
+# finally:
+#     driver.quit()  # закрываем браузер
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-# Настройка драйвера
 options = Options()
-driver = webdriver.Chrome(options=options)
 
+driver = webdriver.Chrome(options=options)
 try:
-    # 1. Открываем сайт
     driver.get("https://www.freeconferencecall.com/login")
 
-    # 2. Удаляем все существующие куки
-    driver.delete_all_cookies()
-
-    # 3. Устанавливаем куку username=user123
-    driver.add_cookie({
-        "name": "username",
-        "value": "user123",
-        "domain": ".freeconferencecall.com",  # важно: указать домен
-    })
-
-    # 4. Обновляем страницу
-    driver.refresh()
-
-    # 5. Читаем и проверяем куку
-    cookie = driver.get_cookie("username")
-    if cookie:
-        print("✅ Кука 'username' успешно установлена:")
-        print(f"   Значение: {cookie['value']}")
-        print(f"   Домен: {cookie.get('domain', 'не указан')}")
-    else:
-        print(" Кука 'username' не найдена. Возможно, домен или путь указаны неверно.")
-
-    # Дополнительно: вывод всех кук для отладки
+    # 1. Удаляем конкретную cookie по имени:
+    # Сначала получаем текущие cookies,
     all_cookies = driver.get_cookies()
-    print(f"\n Всего кук на странице: {len(all_cookies)}")
-    for c in all_cookies:
-        if c["name"] == "username":
-            print(f"   → username = '{c['value']}'")
+    target_name = "_freeconferencecall_session"
+
+    for cookie in all_cookies:
+        if cookie["name"] == target_name:
+            # Удаляем, перезаписывая с пустым значением
+            driver.delete_cookie(target_name)
+            driver.refresh()
+
+            # 5. Читаем и проверяем куку
+            cookie = driver.get_cookie("_freeconferencecall_session")
+            if cookie:
+                print("✅ Кука '_freeconferencecall_session' успешно найдена:")
+                print(f"   Значение: {cookie['name']}")
+            else:
+                print(" Кука '_freeconferencecall_session' не найдена.")
+
+            driver.add_cookie({
+                'name': '_freeconferencecall_session',
+                'value': 'More'
+            })
+
+            print(f"Cookie '{target_name}' удалена.")
+            break
+        else:
+            print(f"Cookie '{target_name}' не найдена.")
 
 finally:
-    driver.quit()  # закрываем браузер
+    driver.quit()
