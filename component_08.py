@@ -289,52 +289,94 @@ import os
 #     except:
 #         pass
 
+#
+# from selenium import webdriver
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.ui import WebDriverWait
+#
+# # Locator (improved: use By.XPATH instead of raw tuple)
+# VISIBLE_AFTER_BUTTON = ("xpath", "//div[@id='delayedText']")
+# DISAPPEARS_TEXT = ("xpath", "//div[@id='deletesuccess']")
+# CLICKABLE_BUTTON = ("xpath", "//input[@id='timerButton']")
+# TRY_IT_BUTTON = ("xpath", "//button[text()='Try it']")
+# MY_BUTTON = ("xpath", "//button[@id='myBtn']")
+#
+#
+# options = webdriver.ChromeOptions()
+# options.add_argument("--window-size=1920,1080")  # 'add_argument'
+#
+# driver = webdriver.Chrome(options=options)
+# wait = WebDriverWait(driver, 30, poll_frequency=1)
+#
+# try:
+#     driver.get("https://omayo.blogspot.com/")
+#
+#     # Wait to become *invisiblity*
+#     wait.until(EC.invisibility_of_element_located(DISAPPEARS_TEXT))
+#     print("✅ Text invisiblity successfully.")
+#
+#     # Wait for the button to become *visible* (not just present)
+#     wait.until(EC.visibility_of_element_located(VISIBLE_AFTER_BUTTON))
+#
+#     print("✅ Button [VISIBLE_AFTER_BUTTON] visible successfully.")
+#
+#     # # Wait button to become *clickable*
+#     wait.until(EC.element_to_be_clickable(CLICKABLE_BUTTON))  # Ждем пока кнопка станет кликабельной (видимой + enabled)
+#
+#     print("✅ Button [CLICKABLE_BUTTON] to become *clickable* successfully.")
+#
+#     # # Wait button  [TRY_IT_BUTTON] to become *clickable*
+#     wait.until(EC.element_to_be_clickable(TRY_IT_BUTTON)).click()  # Ждем пока кнопка станет кликабельной (видимой + enabled)
+#
+#     print("✅ Button [TRY_IT_BUTTON] to become *clickable* successfully.")
+#
+#     # Ждем, пока атрибут 'disabled' элемента станет равным "true"
+#     wait.until(lambda driver: driver.find_element(*MY_BUTTON).get_attribute("disabled") == "true")
+#
+#     print("✅ Button [MY_BUTTON] to become disabled")
+#
+#
+# finally:
+#     driver.quit()
 
 from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# Locator (improved: use By.XPATH instead of raw tuple)
-VISIBLE_AFTER_BUTTON = ("xpath", "//div[@id='delayedText']")
-DISAPPEARS_TEXT = ("xpath", "//div[@id='deletesuccess']")
-CLICKABLE_BUTTON = ("xpath", "//input[@id='timerButton']")
-TRY_IT_BUTTON = ("xpath", "//button[text()='Try it']")
-MY_BUTTON = ("xpath", "//button[@id='myBtn']")
-
-
-options = webdriver.ChromeOptions()
-options.add_argument("--window-size=1920,1080")  # 'add_argument'
+options = Options()
+options.add_argument("--headless")  # опционально, для фонового запуска
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
 
 driver = webdriver.Chrome(options=options)
-wait = WebDriverWait(driver, 30, poll_frequency=1)
+wait = WebDriverWait(driver, 10)
 
 try:
-    driver.get("https://omayo.blogspot.com/")
+    driver.get("https://www.freeconferencecall.com/login")
 
-    # Wait to become *invisiblity*
-    wait.until(EC.invisibility_of_element_located(DISAPPEARS_TEXT))
-    print("✅ Text invisiblity successfully.")
+    # Ждём, пока страница загрузится (хотя бы заголовок)
+    wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
-    # Wait for the button to become *visible* (not just present)
-    wait.until(EC.visibility_of_element_located(VISIBLE_AFTER_BUTTON))
+    # Удаляем куку строго для нужного домена
+    # Сначала устанавливаем контекст домена — важно!
+    driver.get("https://freeconferencecall.com")  # переход на базовый домен
+    driver.delete_cookie("_freeconferencecall_session")
 
-    print("✅ Button [VISIBLE_AFTER_BUTTON] visible successfully.")
+    # Возвращаемся на login и обновляем, чтобы убедиться
+    driver.get("https://www.freeconferencecall.com/login")
+    driver.refresh()
 
-    # # Wait button to become *clickable*
-    wait.until(EC.element_to_be_clickable(CLICKABLE_BUTTON))  # Ждем пока кнопка станет кликабельной (видимой + enabled)
+    # Ждём немного, даём JS время обработать
+    wait.until(lambda d: True)  # минимальная пауза
 
-    print("✅ Button [CLICKABLE_BUTTON] to become *clickable* successfully.")
-
-    # # Wait button  [TRY_IT_BUTTON] to become *clickable*
-    wait.until(EC.element_to_be_clickable(TRY_IT_BUTTON)).click()  # Ждем пока кнопка станет кликабельной (видимой + enabled)
-
-    print("✅ Button [TRY_IT_BUTTON] to become *clickable* successfully.")
-
-    # Ждем, пока атрибут 'disabled' элемента станет равным "true"
-    wait.until(lambda driver: driver.find_element(*MY_BUTTON).get_attribute("disabled") == "true")
-
-    print("✅ Button [MY_BUTTON] to become disabled")
-
-
+    # Проверяем
+    cookie = driver.get_cookie("_freeconferencecall_session")
+    if cookie is None:
+        print("✅ Кука '_freeconferencecall_session' успешно удалена — не найдена.")
+    else:
+        print(f"⚠️  Кука всё ещё присутствует:")
 finally:
     driver.quit()
