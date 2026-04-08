@@ -141,15 +141,8 @@ try:
             else:
                 print(" Кука '_freeconferencecall_session' не найдена.")
 
-            driver.add_cookie({
-                'name': '_freeconferencecall_session',
-                'value': 'More'
-            })
-
             print(f"Cookie '{target_name}' удалена.")
             break
-        else:
-            print(f"Cookie '{target_name}' не найдена.")
 
 finally:
     driver.quit()
