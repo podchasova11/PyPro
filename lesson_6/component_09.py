@@ -259,7 +259,6 @@ import time
 #     driver.quit()  # закрываем браузер
 
 
-# session_id	mc1xac0d0aefea5d26362d676d466829a12abfa840f8
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -321,4 +320,6 @@ try:
 finally:
     time.sleep(3)  # пауза для загрузки
     driver.quit()
+
+
 
