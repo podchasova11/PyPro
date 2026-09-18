@@ -64,11 +64,11 @@ print(id(numbers))
 # Поверхностную копию списка можно сделать несколькими путями, рассмотрим два основных.
 # Способ 1 - Метод copy()
 original_list = [1, 2, 3, 4, 5]
-copy_of_list = original_list.copy() # Создаст копию списка выше (это новый об
+copy_of_list = original_list.copy() # Создаст копию списка выше (это новый объект)
 print(id(original_list))
 print(id(copy_of_list))
 # Способ 2 - срез списка [:]
-# Да, срезы списка возвращают новый обьект)
+# Да, срезы списка возвращают новый объект)
 
 original_list = [1, 2, 3, 4, 5]
 copy_of_list = original_list[:]
