@@ -192,6 +192,7 @@ elif is_raining or not is_sunny:
     if is_raining and not is_sunny:
         result = "Сегодня идет дождь, возьмите зонт!"
 
+
 else:
     result = "Сегодня облачно, но без осадков"
 
